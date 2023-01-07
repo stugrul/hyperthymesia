@@ -1,6 +1,7 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.6.7"
+    id("pmd")
 }
 
 version = "0.1"
@@ -20,12 +21,22 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
 
+    testImplementation 'org.mockito:mockito-core:4.5.1'
 }
 
 
 application {
     mainClass.set("com.hyperthymesia.Application")
 }
+
+pmd {
+    ignoreFailures = false
+    consoleOutput = true
+    toolVersion = "6.41.0"
+    rulesMinimumPriority = 5
+    ruleSets = ["pmdcustomrulesets/bestpracticescustom.xml", "pmdcustomrulesets/errorpronecustom.xml"]
+}
+
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
     targetCompatibility = JavaVersion.toVersion("17")
